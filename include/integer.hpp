@@ -17,3 +17,18 @@
 #pragma once
 
 #include <iostream>
+
+class Integer
+{
+private:
+	int value;
+public:
+	Integer();
+	Integer(int value);
+	Integer(const Integer& other);
+	Integer operator=(const Integer& other);
+	Integer operator+(int value);
+	operator int();
+	friend std::ostream& operator <<(std::ostream& os, const Integer& i);
+	friend std::istream& operator >>(std::istream& is, Integer& i);
+};

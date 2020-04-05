@@ -15,3 +15,39 @@
 // along with integer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <integer.hpp>
+
+Integer::Integer(){};
+
+Integer::Integer(int value):
+	value(value)
+{};
+
+Integer::Integer(const Integer& other):
+	value(other.value)
+{};
+
+Integer Integer::operator=(const Integer& other)
+{
+	this->value = other.value;
+	return *this;
+}
+
+Integer Integer::operator+(int value)
+{
+	return this->value + value;
+}
+
+Integer::operator int()
+{
+	return this->value;
+}
+
+std::ostream& operator <<(std::ostream& os, const Integer& i)
+{
+	return os << i.value;
+}
+
+std::istream& operator >>(std::istream& is, Integer& i)
+{
+	return is >> i.value;
+}
