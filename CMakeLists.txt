@@ -18,7 +18,7 @@ cmake_minimum_required(VERSION 3.13.0)
 
 # El nombre del proyecto
 project(integer
-	VERSION 0.0.0
+	VERSION 1.0.0
 	DESCRIPTION "Entero"
 	HOMEPAGE_URL "https://github.com/utec-computer-science/cs1103-integer-otreblan"
 	LANGUAGES "CXX"

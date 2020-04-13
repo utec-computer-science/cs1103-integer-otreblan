@@ -1,7 +1,7 @@
 # Maintainer: Otreblan <otreblain@gmail.com>
 
 pkgname=integer-git
-pkgver=r7.586e5ff
+pkgver=r8.eba0de7
 pkgrel=1
 epoch=
 pkgdesc="Integer"
