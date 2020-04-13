@@ -16,9 +16,6 @@
 
 cmake_minimum_required(VERSION 3.13.0)
 
-# Módulos de cmake
-include(GNUInstallDirs)
-
 # El nombre del proyecto
 project(integer
 	VERSION 0.0.0
@@ -27,8 +24,14 @@ project(integer
 	LANGUAGES "CXX"
 )
 
+# Sín esto el target_sources() no resuelve path's relativos.
+cmake_policy(SET CMP0076 NEW)
+
 # El programa en sí
 add_library(${PROJECT_NAME} SHARED)
+
+# Módulos de cmake
+include(GNUInstallDirs)
 
 # Version for the library symlinks
 set_target_properties(${PROJECT_NAME}
@@ -37,9 +40,6 @@ set_target_properties(${PROJECT_NAME}
 		SOVERSION ${PROJECT_VERSION_MAJOR}
 		CXX_STANDARD 17
 )
-
-# Sín esto el target_sources() no resuelve path's relativos.
-cmake_policy(SET CMP0076 NEW)
 
 # Source files
 add_subdirectory(src)
