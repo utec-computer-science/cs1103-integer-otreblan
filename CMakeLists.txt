@@ -28,7 +28,15 @@ project(integer
 )
 
 # El programa en sí
-add_executable(${PROJECT_NAME})
+add_library(${PROJECT_NAME} SHARED)
+
+# Version for the library symlinks
+set_target_properties(${PROJECT_NAME}
+	PROPERTIES
+		VERSION ${PROJECT_VERSION}
+		SOVERSION ${PROJECT_VERSION_MAJOR}
+		CXX_STANDARD 17
+)
 
 # Sín esto el target_sources() no resuelve path's relativos.
 cmake_policy(SET CMP0076 NEW)
@@ -37,12 +45,17 @@ cmake_policy(SET CMP0076 NEW)
 add_subdirectory(src)
 
 # Headers
-target_include_directories(${PROJECT_NAME}
-	PRIVATE ${PROJECT_SOURCE_DIR}/include
-)
+add_subdirectory(include)
 
-# El estandard de C++
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+# pkg-config
+configure_file(lib${PROJECT_NAME}.pc.in
+	${CMAKE_BINARY_DIR}/lib${PROJECT_NAME}.pc
+	@ONLY
+)
+install(FILES
+	${CMAKE_BINARY_DIR}/lib${PROJECT_NAME}.pc
+	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig
+)
 
 # Flags para el compilador
 if(NOT DEFINED ENV{CXXFLAGS})
@@ -52,5 +65,5 @@ endif()
 
 # Definiciones para la instalación
 install(TARGETS ${PROJECT_NAME}
-	DESTINATION ${CMAKE_INSTALL_BINDIR}
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )

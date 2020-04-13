@@ -14,7 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with integer.  If not, see <http://www.gnu.org/licenses/>.
 
-target_sources(${PROJECT_NAME}
-	PRIVATE
-		integer.cpp
+# Headers
+target_include_directories(${PROJECT_NAME}
+	PRIVATE ./
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
+	DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+	FILES_MATCHING PATTERN "*.hpp"
 )
