@@ -16,33 +16,46 @@
 
 cmake_minimum_required(VERSION 3.13.0)
 
-# Módulos de cmake
-include(GNUInstallDirs)
-
 # El nombre del proyecto
 project(integer
-	VERSION 0.0.0
+	VERSION 1.0.0
 	DESCRIPTION "Entero"
 	HOMEPAGE_URL "https://github.com/utec-computer-science/cs1103-integer-otreblan"
 	LANGUAGES "CXX"
 )
 
-# El programa en sí
-add_executable(${PROJECT_NAME})
-
 # Sín esto el target_sources() no resuelve path's relativos.
 cmake_policy(SET CMP0076 NEW)
+
+# El programa en sí
+add_library(${PROJECT_NAME} SHARED)
+
+# Módulos de cmake
+include(GNUInstallDirs)
+
+# Version for the library symlinks
+set_target_properties(${PROJECT_NAME}
+	PROPERTIES
+		VERSION ${PROJECT_VERSION}
+		SOVERSION ${PROJECT_VERSION_MAJOR}
+		CXX_STANDARD 17
+)
 
 # Source files
 add_subdirectory(src)
 
 # Headers
-target_include_directories(${PROJECT_NAME}
-	PRIVATE ${PROJECT_SOURCE_DIR}/include
-)
+add_subdirectory(include)
 
-# El estandard de C++
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+# pkg-config
+configure_file(${PROJECT_NAME}.pc.in
+	${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc
+	@ONLY
+)
+install(FILES
+	${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc
+	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig
+)
 
 # Flags para el compilador
 if(NOT DEFINED ENV{CXXFLAGS})
@@ -52,5 +65,5 @@ endif()
 
 # Definiciones para la instalación
 install(TARGETS ${PROJECT_NAME}
-	DESTINATION ${CMAKE_INSTALL_BINDIR}
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
