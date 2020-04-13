@@ -48,12 +48,12 @@ add_subdirectory(src)
 add_subdirectory(include)
 
 # pkg-config
-configure_file(lib${PROJECT_NAME}.pc.in
-	${CMAKE_BINARY_DIR}/lib${PROJECT_NAME}.pc
+configure_file(${PROJECT_NAME}.pc.in
+	${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc
 	@ONLY
 )
 install(FILES
-	${CMAKE_BINARY_DIR}/lib${PROJECT_NAME}.pc
+	${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc
 	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig
 )
 
